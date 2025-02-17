@@ -1,153 +1,21 @@
-﻿namespace task2
+﻿using System;
+using System.Collections.Generic;
+
+namespace FluentCalculator
 {
-    public static class FluentCalculator
+    public partial class FluentCalculator
     {
-        private static Queue<object> _queue = new();
-
-        public static void Enqueue(object item) => _queue.Enqueue(item);
-
-        // Values zero-ten
-        public static Value Zero
-        {
-            get
-            {
-                Enqueue(Values.One);
-                return Values.One;
-            }
-        }
-
-        public static Value One
-        {
-            get
-            {
-                Enqueue(Values.One);
-                return Values.One;
-            }
-        }
-
-        public static Value Two
-        {
-            get
-            {
-                Enqueue(Values.Two);
-                return Values.Two;
-            }
-        }
-
-        public static Value Three
-        {
-            get
-            {
-                Enqueue(Values.Three);
-                return Values.Three;
-            }
-        }
-
-        public static Value Four
-        {
-            get
-            {
-                Enqueue(Values.Four);
-                return Values.Four;
-            }
-        }
-
-        public static Value Five
-        {
-            get
-            {
-                Enqueue(Values.Five);
-                return Values.Five;
-            }
-        }
-
-        public static Value Six
-        {
-            get
-            {
-                Enqueue(Values.Six);
-                return Values.Six;
-            }
-        }
-
-        public static Value Seven
-        {
-            get
-            {
-                Enqueue(Values.Seven);
-                return Values.Seven;
-            }
-        }
-
-        public static Value Eight
-        {
-            get
-            {
-                Enqueue(Values.Eight);
-                return Values.Eight;
-            }
-        }
-
-        public static Value Nine
-        {
-            get
-            {
-                Enqueue(Values.Nine);
-                return Values.Nine;
-            }
-        }
-
-        public static Value Ten
-        {
-            get
-            {
-                Enqueue(Values.Ten);
-                return Values.Ten;
-            }
-        }
-
-        public static Operation Plus => throw new InvalidOperationException();
-        public static Operation Minus => throw new InvalidOperationException();
-        public static Operation Times => throw new InvalidOperationException();
-        public static Operation DividedBy => throw new InvalidOperationException();
-
-        public static Value Calculate()
-        {
-            try
-            {
-                // arithmetic calculation
-                Value left = (Value)_queue.Dequeue();
-                Operation operation = (Operation)_queue.Dequeue();
-                Value right = (Value)_queue.Dequeue();
-
-                operation.Left = left;
-                operation.Right = right;
-                var intermediate = operation.Perform();
-                if (TotalResult != null)
-                    TotalResult.Content = intermediate;
-                else
-                    TotalResult = new Value(intermediate);
-
-                while (_queue.Count() != 0)
-                {
-                    left = TotalResult;
-                    operation = (Operation)_queue.Dequeue();
-                    right = (Value)_queue.Dequeue();
-
-                    operation.Left = left;
-                    operation.Right = right;
-                    TotalResult.Content = operation.Perform();
-                }
-                return TotalResult;
-            }
-            catch (Exception ex)
-            {
-                TotalResult = null;
-                _queue.Clear();
-                return null;
-            }
-        }
-
-        public static Value TotalResult { get; set; } = null;
+        // Статические свойства для доступа к начальным значениям
+        public static Value zero => new Value(0);
+        public static Value one => new Value(1);
+        public static Value two => new Value(2);
+        public static Value three => new Value(3);
+        public static Value four => new Value(4);
+        public static Value five => new Value(5);
+        public static Value six => new Value(6);
+        public static Value seven => new Value(7);
+        public static Value eight => new Value(8);
+        public static Value nine => new Value(9);
+        public static Value ten => new Value(10);
     }
 }

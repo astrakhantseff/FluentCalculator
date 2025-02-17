@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            decimal? result = (FluentCalculator.One.Minus.Three+10).Result;
+            decimal? result = FluentCalculator.FluentCalculator.one.minus.three+10;
             Console.WriteLine(result.HasValue ? result : "The error in expression");
             Console.ReadLine();
         }

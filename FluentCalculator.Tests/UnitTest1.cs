@@ -1,12 +1,13 @@
 using task2;
+using FluentCalculator;
 
 namespace Fluent.Calculator.Tests
 {
     [TestFixture]
     public class FluentCalculatorTests
     {
-        private decimal? InvalidValueSequence() => FluentCalculator.One.One.Plus.One.Result;
-        private decimal? InvalidOperationSequence() => FluentCalculator.Plus.Minus.One.Result;
+        private decimal? InvalidValueSequence() => FluentCalculator.FluentCalculator.one.one.plus.one;
+        //private decimal? InvalidOperationSequence() => FluentCalculator.FluentCalculator.plus.minus.one;
 
         [Test]
         public void ValueCannotCallValue()
@@ -15,16 +16,10 @@ namespace Fluent.Calculator.Tests
         }
        
         [Test]
-        public void OperationCannotCallOperation()
-        {
-            Assert.Throws<InvalidOperationException>(() => InvalidOperationSequence());
-        }
-
-        [Test]
         public void OperationCanCallValue()
         {
             decimal? expected = 3;
-            decimal? result = FluentCalculator.One.Plus.Two.Result;
+            decimal? result = FluentCalculator.FluentCalculator.one.plus.two;
             Assert.That(result, Is.EqualTo(expected));
         }
 
@@ -32,7 +27,7 @@ namespace Fluent.Calculator.Tests
         public void StackableToInfinity()
         {
             decimal? expected = -1;
-            decimal? result = FluentCalculator.One.Plus.Two.Plus.Three.Minus.One.Minus.Two.Minus.Four.Result;
+            decimal? result = FluentCalculator.FluentCalculator.one.plus.two.plus.three.minus.one.minus.two.minus.four;
             Assert.That(result, Is.EqualTo(expected));
         }
 
@@ -40,7 +35,7 @@ namespace Fluent.Calculator.Tests
         public void ValueResolveToPrimitiveInteger()
         {
             decimal? expected = 1m;
-            decimal? result = (FluentCalculator.One.Plus.Ten - 10m).Result;
+            decimal? result = FluentCalculator.FluentCalculator.one.plus.ten - 10m;
             Assert.That(result, Is.EqualTo(expected));
         }
     }

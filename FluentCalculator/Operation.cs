@@ -1,126 +1,39 @@
-﻿namespace task2
+﻿using System;
+
+namespace FluentCalculator
 {
-    public class Operation
+    public partial class FluentCalculator
     {
-        public Operation(OperationType type)
+        // Внутренний класс для представления операций
+        public class Operation
         {
-            Type = type;
-        }
+            private readonly int _currentValue;
+            private readonly Func<int, int, int> _operation;
 
-        public Value Zero
-        {
-            get
+            public Operation(int currentValue, Func<int, int, int> operation)
             {
-                FluentCalculator.Enqueue(Values.Zero);
-                return Values.Zero;
+                _currentValue = currentValue;
+                _operation = operation;
             }
-        }
 
-        public Value One
-        {
-            get
-            {
-                FluentCalculator.Enqueue(Values.One);
-                return Values.One;
-            }
-        }
+            // Методы для возврата значений
+            public Value zero => new Value(_operation(_currentValue, 0));
+            public Value one => new Value(_operation(_currentValue, 1));
+            public Value two => new Value(_operation(_currentValue, 2));
+            public Value three => new Value(_operation(_currentValue, 3));
+            public Value four => new Value(_operation(_currentValue, 4));
+            public Value five => new Value(_operation(_currentValue, 5));
+            public Value six => new Value(_operation(_currentValue, 6));
+            public Value seven => new Value(_operation(_currentValue, 7));
+            public Value eight => new Value(_operation(_currentValue, 8));
+            public Value nine => new Value(_operation(_currentValue, 9));
+            public Value ten => new Value(_operation(_currentValue, 10));
 
-        public Value Two
-        {
-            get
-            {
-                FluentCalculator.Enqueue(Values.Two);
-                return Values.Two;
-            }
-        }
-
-        public Value Three
-        {
-            get
-            {
-                FluentCalculator.Enqueue(Values.Three);
-                return Values.Three;
-            }
-        }
-
-        public Value Four
-        {
-            get
-            {
-                FluentCalculator.Enqueue(Values.Four);
-                return Values.Four;
-            }
-        }
-        public Value Five
-        {
-            get
-            {
-                FluentCalculator.Enqueue(Values.Five);
-                return Values.Five;
-            }
-        }
-        public Value Six
-        {
-            get
-            {
-                FluentCalculator.Enqueue(Values.Six);
-                return Values.Six;
-            }
-        }
-        public Value Seven
-        {
-            get
-            {
-                FluentCalculator.Enqueue(Values.Seven);
-                return Values.Seven;
-            }
-        }
-        public Value Eight
-        {
-            get
-            {
-                FluentCalculator.Enqueue(Values.Eight);
-                return Values.Eight;
-            }
-        }
-        public Value Nine
-        {
-            get
-            {
-                FluentCalculator.Enqueue(Values.Nine);
-                return Values.Nine;
-            }
-        }
-        public Value Ten
-        {
-            get
-            {
-                FluentCalculator.Enqueue(Values.Ten);
-                return Values.Ten;
-            }
-        }
-
-        public Value Left { get; set; }
-        public Value Right { get; set; }
-        public OperationType Type { get; set; }
-
-        public Operation Plus => throw new InvalidOperationException();
-        public Operation Minus => throw new InvalidOperationException();
-        public Operation Times => throw new InvalidOperationException();
-        public Operation DividedBy => throw new InvalidOperationException();
-
-        public decimal Perform()
-        {
-            if (Type == OperationType.dividedBy && Right.Content == 0)
-                throw new DivideByZeroException();
-
-            return Type switch
-            {
-                OperationType.plus => Left.Content + Right.Content,
-                OperationType.minus => Left.Content - Right.Content,
-                OperationType.times => Left.Content * Right.Content,
-                OperationType.dividedBy => Left.Content / Right.Content
-            };
+            // Попытка вызова операции из операции вызовет исключение
+            public Operation plus => throw new InvalidOperationException("Cannot call an operation from an operation.");
+            public Operation minus => throw new InvalidOperationException("Cannot call an operation from an operation.");
+            public Operation times => throw new InvalidOperationException("Cannot call an operation from an operation.");
+            public Operation dividedBy => throw new InvalidOperationException("Cannot call an operation from an operation.");
         }
     }
 }
